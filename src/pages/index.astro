@@ -1,0 +1,590 @@
+---
+import { ArrowRight, CodeXml, Globe, HardDrive, Mail, MapPin, Menu, Monitor, Server, Workflow, X } from "@lucide/astro";
+import { site } from "../data/site";
+import "../styles/global.css";
+
+const canonicalUrl = new URL("/", site.url).toString();
+const siteImageUrl = new URL(site.imagePath, site.url).toString();
+const siteLogoUrl = new URL(site.logoPath, site.url).toString();
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: site.name,
+  url: site.url,
+  logo: siteLogoUrl,
+  image: siteImageUrl,
+  email: site.email,
+  sameAs: [site.googleBusinessProfileUrl],
+  description: site.description,
+};
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: site.name,
+  url: site.url,
+  publisher: {
+    "@type": "Organization",
+    name: site.name,
+    logo: {
+      "@type": "ImageObject",
+      url: siteLogoUrl,
+    },
+  },
+};
+
+const navItems = [
+  { label: "Services", href: "#services" },
+  { label: "Method", href: "#method" },
+  { label: "Work", href: "#work" },
+  { label: "About", href: "#about" },
+];
+
+const methodSteps = [
+  {
+    label: "Understand",
+    copy: "We learn how the business actually runs before prescribing tools.",
+  },
+  {
+    label: "Map",
+    copy: "We trace the website, domains, email, hosting, apps, handoffs, and gaps.",
+  },
+  {
+    label: "Build",
+    copy: "We stabilize the existing stack and create the right missing pieces.",
+  },
+  {
+    label: "Manage",
+    copy: "We keep systems monitored, backed up, improved, and understandable.",
+  },
+];
+
+const workExamples = [
+  "Launch a modern business website with hosting, DNS, email, and backups handled.",
+  "Replace spreadsheet workflows with a practical internal tool or dashboard.",
+  "Connect forms, reports, approvals, office processes, and customer handoffs.",
+  "Build mobile-friendly tools for field teams, customers, or repeat operations.",
+];
+
+const heroResponsibilities = [
+  {
+    title: "Websites & web apps",
+    detail: "Public sites, landing pages, forms, customer portals, and mobile-friendly web tools.",
+    icon: Monitor,
+  },
+  {
+    title: "Domains, hosting & email",
+    detail: "DNS, deployments, business email, backups, monitoring, and ongoing stack management.",
+    icon: Server,
+  },
+  {
+    title: "Software & automation",
+    detail: "Internal tools, dashboards, reporting, integrations, and workflows that replace manual handoffs.",
+    icon: CodeXml,
+  },
+];
+
+const supportItems = [
+  { label: "DNS", detail: "Records, redirects, renewals", icon: Globe },
+  { label: "Backups", detail: "Recovery paths and monitoring", icon: HardDrive },
+  { label: "Handoffs", detail: "Forms, approvals, reports", icon: Workflow },
+];
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth bg-paper text-ink">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{site.title}</title>
+    <meta name="description" content={site.description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href={site.logoPath} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={site.title} />
+    <meta property="og:description" content={site.description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={siteImageUrl} />
+    <meta property="og:image:width" content="1717" />
+    <meta property="og:image:height" content="916" />
+    <meta property="og:image:alt" content="Interlay Software website and systems management interface" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={site.title} />
+    <meta name="twitter:description" content={site.description} />
+    <meta name="twitter:image" content={siteImageUrl} />
+    <meta name="theme-color" content="#365f4f" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+  </head>
+  <body class="min-h-screen overflow-x-hidden bg-paper font-sans antialiased">
+    <header class="sticky top-0 z-50 border-b border-line/80 bg-white/92 backdrop-blur-xl">
+      <div class="mx-auto flex h-[68px] max-w-[1240px] items-center justify-between px-5 sm:px-8">
+        <a href="/" class="flex min-w-0 items-center gap-3" aria-label="Interlay Software home" data-home-logo-link>
+          <img
+            src="/favicon.svg"
+            alt=""
+            class="size-10 shrink-0 rounded-lg shadow-[0_10px_24px_rgba(54,95,79,0.1)]"
+            aria-hidden="true"
+          />
+          <span class="hidden truncate text-xl font-extrabold text-ink sm:block sm:text-2xl">Interlay Software</span>
+        </a>
+
+        <nav class="hidden items-center gap-9 text-[0.95rem] font-semibold text-body md:flex" aria-label="Site">
+          {
+            navItems.map((item) => (
+              <a class="transition hover:text-teal-dark" href={item.href}>
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+
+        <div class="flex items-center justify-end gap-2">
+          <a
+            href="mailto:nikolas@interlaysoftware.com"
+            class="hidden min-h-12 items-center gap-3 rounded-md bg-teal-dark px-5 text-[0.95rem] font-extrabold text-white shadow-[0_14px_28px_rgba(54,95,79,0.18)] transition hover:-translate-y-0.5 hover:bg-teal-deep lg:inline-flex"
+          >
+            Talk through your stack
+            <ArrowRight class="size-4" aria-hidden="true" />
+          </a>
+          <button
+            id="mobile-menu-btn"
+            type="button"
+            class="menu-icon-button inline-flex size-10 items-center justify-center rounded-md text-ink hover:bg-teal-soft active:bg-teal-soft md:hidden"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+            aria-label="Open menu"
+          >
+            <Menu class="size-6" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div id="mobile-menu" class="fixed inset-0 z-[70] hidden md:hidden" aria-hidden="true" data-state="closed">
+      <button
+        id="mobile-menu-backdrop"
+        type="button"
+        class="mobile-menu-backdrop absolute inset-0 bg-deep/50 backdrop-blur-sm"
+        aria-label="Close menu"
+      >
+      </button>
+      <aside
+        class="mobile-menu-panel absolute top-0 right-0 flex h-full w-full max-w-[390px] flex-col bg-white shadow-2xl"
+      >
+        <div class="flex items-center justify-between border-b border-line px-5 py-3">
+          <a
+            href="/"
+            class="flex min-w-0 items-center gap-3"
+            aria-label="Interlay Software home"
+            data-home-logo-link
+            data-mobile-menu-link
+          >
+            <img
+              src="/favicon.svg"
+              alt=""
+              class="size-10 shrink-0 rounded-lg shadow-[0_10px_24px_rgba(54,95,79,0.1)]"
+              aria-hidden="true"
+            />
+            <span class="truncate text-lg font-extrabold text-ink">Interlay Software</span>
+          </a>
+          <button
+            id="mobile-menu-close"
+            type="button"
+            class="menu-icon-button inline-flex size-10 items-center justify-center rounded-md text-ink hover:bg-teal-soft active:bg-teal-soft"
+            aria-label="Close menu"
+          >
+            <X class="size-6" aria-hidden="true" />
+          </button>
+        </div>
+
+        <nav class="grid gap-1 overflow-y-auto p-4" aria-label="Mobile navigation">
+          {
+            navItems.map((item) => (
+              <a
+                class="grid grid-cols-[1fr_1.75rem] items-center gap-3 rounded-md border-b border-line px-4 py-4 text-base font-semibold text-ink transition-colors hover:bg-teal-soft hover:text-teal-dark active:bg-teal-soft"
+                href={item.href}
+                data-mobile-menu-link
+              >
+                <span>{item.label}</span>
+                <span class="grid size-7 place-items-center text-teal-dark">
+                  <ArrowRight class="size-4" aria-hidden="true" />
+                </span>
+              </a>
+            ))
+          }
+        </nav>
+
+        <div class="mt-auto grid gap-3 border-t border-line bg-paper/70 p-4">
+          <a
+            class="inline-flex min-h-12 items-center justify-center gap-3 rounded-md bg-teal-dark px-5 font-extrabold whitespace-nowrap text-white shadow-[0_14px_28px_rgba(54,95,79,0.18)] transition hover:bg-teal-deep"
+            href="mailto:nikolas@interlaysoftware.com"
+            data-mobile-menu-link
+          >
+            Talk through your stack
+            <ArrowRight class="size-4" aria-hidden="true" />
+          </a>
+        </div>
+      </aside>
+    </div>
+
+    <main id="top">
+      <section class="border-b border-line bg-[linear-gradient(180deg,#fbfbf7_0%,#eaf2ed_100%)]">
+        <div
+          class="mx-auto grid max-w-[1240px] gap-12 px-5 pt-14 pb-14 sm:px-8 sm:pt-16 lg:min-h-[620px] lg:grid-cols-[0.98fr_1.02fr] lg:items-center lg:gap-14 lg:py-12"
+        >
+          <div class="max-w-[680px]">
+            <p class="mb-6 text-[0.78rem] font-extrabold tracking-[0.4em] text-teal-dark uppercase">
+              Interlay Software
+            </p>
+            <h1
+              class="max-w-[680px] text-[2.72rem] leading-[1.02] font-black text-ink sm:text-[4rem] lg:text-[4.05rem]"
+            >
+              Your technical partner for websites, systems, and software.
+            </h1>
+            <p class="mt-7 max-w-[590px] text-lg leading-8 text-body sm:text-xl">
+              We build and manage websites, hosting, email, infrastructure, mobile apps, and custom software for small
+              businesses.
+            </p>
+            <div class="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <a
+                href="mailto:nikolas@interlaysoftware.com"
+                class="inline-flex min-h-[58px] items-center justify-center gap-3 rounded-md bg-teal-dark px-6 text-base font-extrabold text-white shadow-[0_18px_34px_rgba(54,95,79,0.2)] transition hover:-translate-y-0.5 hover:bg-teal-deep"
+              >
+                Talk through your stack
+                <ArrowRight class="size-5" aria-hidden="true" />
+              </a>
+              <a
+                href="#services"
+                class="inline-flex min-h-[54px] items-center justify-center gap-3 border-b-2 border-teal-dark px-1 text-base font-extrabold text-teal-dark transition hover:text-ink"
+              >
+                Explore services
+                <ArrowRight class="size-5" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+
+          <aside
+            class="rounded-lg border border-line bg-white/88 p-5 shadow-[0_24px_70px_rgba(16,24,32,0.1)] backdrop-blur sm:p-7"
+            aria-label="What Interlay manages"
+          >
+            <p class="text-[0.72rem] font-extrabold tracking-[0.32em] text-teal-dark uppercase">Handled together</p>
+            <div class="mt-6 divide-y divide-line">
+              {
+                heroResponsibilities.map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <article class="grid gap-4 py-5 first:pt-0 last:pb-0 sm:grid-cols-[44px_1fr]">
+                      <div class="grid size-11 place-items-center rounded-lg border border-line bg-panel-soft text-teal-dark">
+                        <Icon class="size-6" aria-hidden="true" />
+                      </div>
+                      <div>
+                        <h2 class="text-xl leading-tight font-black text-ink">{item.title}</h2>
+                        <p class="mt-2 text-base leading-7 text-body">{item.detail}</p>
+                      </div>
+                    </article>
+                  );
+                })
+              }
+            </div>
+            <div class="mt-7 grid gap-3 border-t border-line pt-5 sm:grid-cols-3">
+              {
+                supportItems.map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <article>
+                      <div class="flex items-center gap-2 text-ink">
+                        <Icon class="size-5 shrink-0 text-teal-dark" aria-hidden="true" />
+                        <h2 class="text-sm font-extrabold">{item.label}</h2>
+                      </div>
+                      <p class="mt-2 text-sm leading-5 text-subtle">{item.detail}</p>
+                    </article>
+                  );
+                })
+              }
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="services" class="bg-white">
+        <div class="mx-auto max-w-[1240px] px-5 py-16 sm:px-8 lg:py-20">
+          <div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+            <div>
+              <p class="mb-4 text-sm font-extrabold tracking-[0.32em] text-teal-dark uppercase">Services</p>
+              <h2 class="max-w-[560px] text-4xl leading-[1.04] font-black text-ink sm:text-5xl">
+                The parts of business technology that need to work together.
+              </h2>
+            </div>
+            <p class="max-w-[650px] text-lg leading-8 text-body lg:justify-self-end">
+              Interlay keeps the public site, operations stack, and custom software moving in the same direction instead
+              of becoming separate problems.
+            </p>
+          </div>
+
+          <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line lg:grid-cols-3">
+            <article class="bg-white p-7">
+              <Monitor class="mb-8 size-10 text-teal-dark" aria-hidden="true" />
+              <h3 class="text-2xl leading-tight font-black text-ink">Websites &amp; Web Apps</h3>
+              <p class="mt-4 leading-7 text-body">
+                Modern sites, landing pages, customer portals, and mobile-friendly web tools with hosting and deployment
+                handled.
+              </p>
+            </article>
+
+            <article class="bg-white p-7">
+              <Server class="mb-8 size-10 text-teal-dark" aria-hidden="true" />
+              <h3 class="text-2xl leading-tight font-black text-ink">Managed Infrastructure</h3>
+              <p class="mt-4 leading-7 text-body">
+                Domains, DNS, email, hosting, backups, monitoring, deployments, and the operational details that keep
+                the stack stable.
+              </p>
+            </article>
+
+            <article class="bg-white p-7">
+              <CodeXml class="mb-8 size-10 text-teal-dark" aria-hidden="true" />
+              <h3 class="text-2xl leading-tight font-black text-ink">Custom Software &amp; Automation</h3>
+              <p class="mt-4 leading-7 text-body">
+                Internal tools, mobile workflows, dashboards, reporting, integrations, and practical automation for the
+                work that still happens by hand.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="method" class="border-y border-line bg-deep text-white">
+        <div class="mx-auto grid max-w-[1240px] gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[0.72fr_1.28fr] lg:py-24">
+          <div>
+            <p class="mb-5 text-sm font-extrabold tracking-[0.32em] text-sky uppercase">Method</p>
+            <h2 class="max-w-[520px] text-4xl leading-[1.04] font-black sm:text-5xl">
+              We make messy technology understandable and manageable.
+            </h2>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            {
+              methodSteps.map((step, index) => (
+                <article class="rounded-lg border border-white/12 bg-white/[0.06] p-6">
+                  <span class="text-sm font-black text-sky">{String(index + 1).padStart(2, "0")}</span>
+                  <h3 class="mt-8 text-2xl font-black">{step.label}</h3>
+                  <p class="mt-3 leading-7 text-deep-copy">{step.copy}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section id="work" class="bg-paper">
+        <div class="mx-auto max-w-[1240px] px-5 py-20 sm:px-8 lg:py-24">
+          <div class="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
+            <div>
+              <p class="mb-5 text-sm font-extrabold tracking-[0.32em] text-teal-dark uppercase">Work</p>
+              <h2 class="max-w-[560px] text-4xl leading-[1.04] font-black text-ink sm:text-5xl">
+                Practical projects for the systems behind daily work.
+              </h2>
+            </div>
+            <p class="max-w-[680px] text-xl leading-8 text-body lg:justify-self-end">
+              If case studies are not the right first conversation, we start with the stack you have today and the work
+              it needs to support tomorrow.
+            </p>
+          </div>
+
+          <div class="mt-12 grid gap-4 md:grid-cols-2">
+            {
+              workExamples.map((example) => (
+                <article class="rounded-lg border border-line bg-white p-6 shadow-[0_12px_32px_rgba(16,24,32,0.05)]">
+                  <Workflow class="mb-8 size-8 text-teal-dark" aria-hidden="true" />
+                  <p class="text-lg leading-7 font-bold text-ink">{example}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="bg-white">
+        <div class="mx-auto grid max-w-[1240px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:py-24">
+          <div>
+            <p class="mb-5 text-sm font-extrabold tracking-[0.32em] text-teal-dark uppercase">About</p>
+            <h2 class="max-w-[610px] text-4xl leading-[1.04] font-black text-ink sm:text-5xl">
+              A technical partner for the whole business stack.
+            </h2>
+          </div>
+          <div class="space-y-6 text-xl leading-8 text-body">
+            <p>
+              Interlay helps small businesses build, manage, and modernize the digital systems they depend on: the
+              public website, the domain, the email, the hosting, the internal tools, the mobile workflows, and the
+              operational software behind the business.
+            </p>
+            <p class="font-bold text-ink">Not just designed. Not just built. Managed, connected, and made useful.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="bg-teal-soft">
+        <div class="mx-auto grid max-w-[1240px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[1fr_430px] lg:py-24">
+          <div>
+            <p class="mb-5 text-sm font-extrabold tracking-[0.32em] text-teal-dark uppercase">Contact</p>
+            <h2 class="max-w-[720px] text-4xl leading-[1.04] font-black text-ink sm:text-5xl">
+              Tell us what your business runs on.
+            </h2>
+            <p class="mt-7 max-w-[720px] text-xl leading-8 text-body">
+              Send a short note about your website, hosting, email, internal tools, manual workflows, or the systems you
+              want to improve.
+            </p>
+          </div>
+          <article class="rounded-lg border border-line bg-white p-7 shadow-site">
+            <h3 class="text-2xl font-black text-ink">Start with the stack</h3>
+            <p class="mt-4 leading-7 text-body">
+              Include the tools you use today, what still happens by hand, and where better software would change the
+              week.
+            </p>
+            <a
+              href="mailto:nikolas@interlaysoftware.com"
+              class="mt-8 inline-flex min-h-[58px] w-full items-center justify-center gap-3 rounded-md bg-teal-dark px-6 text-base font-extrabold text-white shadow-[0_16px_32px_rgba(54,95,79,0.22)] transition hover:-translate-y-0.5 hover:bg-teal-deep"
+            >
+              Email Us
+              <ArrowRight class="size-5" aria-hidden="true" />
+            </a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-deep py-8 text-white lg:py-10">
+      <div class="mx-auto max-w-[1240px] px-5 sm:px-8">
+        <div class="grid gap-7 md:grid-cols-[1fr_auto] md:items-center">
+          <div class="max-w-[620px]">
+            <a
+              class="footer-brand-link inline-flex items-center gap-3"
+              href="/"
+              aria-label="Interlay Software home"
+              data-home-logo-link
+            >
+              <span class="footer-logo-mark grid size-11 shrink-0 place-items-center rounded-md bg-white p-2">
+                <img src="/favicon.svg" alt="" class="size-7 object-contain" aria-hidden="true" />
+              </span>
+              <span class="text-lg leading-tight font-black text-white">Interlay Software</span>
+            </a>
+            <p class="mt-4 text-sm leading-6 font-medium text-white/64 sm:text-base">
+              Websites, hosting, email, infrastructure, and custom software for small businesses.
+            </p>
+          </div>
+
+          <div class="grid gap-5 md:justify-items-end">
+            <nav aria-label="Footer navigation">
+              <ul class="flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold text-white/68 sm:text-base md:justify-end">
+                {
+                  [...navItems, { label: "Contact", href: "#contact" }].map((item) => (
+                    <li>
+                      <a class="footer-nav-link" href={item.href}>
+                        {item.label}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </nav>
+            <div class="grid gap-3 text-sm leading-6 font-medium text-white/64 sm:text-base">
+              <a class="footer-contact-link" href="mailto:nikolas@interlaysoftware.com">
+                <span class="footer-contact-icon">
+                  <Mail class="size-4" aria-hidden="true" stroke-width="2.4" />
+                </span>
+                <span>nikolas@interlaysoftware.com</span>
+              </a>
+              <a class="footer-contact-link" href={site.googleBusinessProfileUrl}>
+                <span class="footer-contact-icon">
+                  <MapPin class="size-4" aria-hidden="true" stroke-width="2.4" />
+                </span>
+                <span>Google Business Profile</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-7 border-t border-white/10 pt-5">
+          <p class="text-sm font-medium text-white/48">© 2026 Interlay Software LLC. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const initHeader = () => {
+        const menu = document.getElementById("mobile-menu");
+        const openButton = document.getElementById("mobile-menu-btn");
+        const closeButton = document.getElementById("mobile-menu-close");
+        const backdrop = document.getElementById("mobile-menu-backdrop");
+        const homeLogoLinks = document.querySelectorAll<HTMLAnchorElement>("[data-home-logo-link]");
+        const mobileLinks = document.querySelectorAll("[data-mobile-menu-link]");
+        const menuAnimationDuration = 240;
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        let closeTimer: number | undefined;
+
+        const openMenu = () => {
+          if (!menu) {
+            return;
+          }
+
+          window.clearTimeout(closeTimer);
+          menu.classList.remove("hidden");
+          menu.setAttribute("aria-hidden", "false");
+          openButton?.setAttribute("aria-expanded", "true");
+          document.body.style.overflow = "hidden";
+          void menu.offsetWidth;
+          menu.dataset.state = "open";
+        };
+
+        const closeMenu = () => {
+          if (!menu || menu.classList.contains("hidden")) {
+            return;
+          }
+
+          window.clearTimeout(closeTimer);
+          menu.dataset.state = "closed";
+          menu.setAttribute("aria-hidden", "true");
+          openButton?.setAttribute("aria-expanded", "false");
+          document.body.style.overflow = "";
+          closeTimer = window.setTimeout(() => {
+            if (menu.dataset.state === "closed") {
+              menu.classList.add("hidden");
+            }
+          }, menuAnimationDuration);
+        };
+
+        openButton?.addEventListener("click", openMenu);
+        closeButton?.addEventListener("click", closeMenu);
+        backdrop?.addEventListener("click", closeMenu);
+        homeLogoLinks.forEach((link) =>
+          link.addEventListener("click", (event) => {
+            if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+              return;
+            }
+
+            if (window.location.pathname !== "/") {
+              return;
+            }
+
+            event.preventDefault();
+            closeMenu();
+            history.replaceState(null, "", "/");
+            window.scrollTo({ top: 0, behavior: prefersReducedMotion.matches ? "auto" : "smooth" });
+          }),
+        );
+        mobileLinks.forEach((link) => link.addEventListener("click", closeMenu));
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") {
+            closeMenu();
+          }
+        });
+      };
+
+      initHeader();
+      document.addEventListener("astro:page-load", initHeader);
+    </script>
+  </body>
+</html>
