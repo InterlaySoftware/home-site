@@ -9,6 +9,5 @@ export const site = {
     "Interlay Software builds and manages websites, hosting, email, infrastructure, mobile apps, and custom software for small businesses.",
   email: "nikolas@interlaysoftware.com",
   googleBusinessProfileUrl: "https://g.page/r/CSfQVgNcHd8aEAI",
-  imagePath: "/interlay-hero.png",
   logoPath: "/favicon.svg",
 };
