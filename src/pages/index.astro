@@ -1,5 +1,17 @@
 ---
-import { ArrowRight, CodeXml, Globe, HardDrive, Mail, MapPin, Menu, Monitor, Server, Workflow, X } from "@lucide/astro";
+import {
+  ArrowRight,
+  CircleCheck,
+  ClipboardCheck,
+  CodeXml,
+  Mail,
+  MapPin,
+  Menu,
+  Monitor,
+  Server,
+  Workflow,
+  X,
+} from "@lucide/astro";
 import { site } from "../data/site";
 import "../styles/global.css";
 
@@ -32,6 +44,7 @@ const websiteSchema = {
 
 const navItems = [
   { label: "Services", href: "#services" },
+  { label: "Audit", href: "#audit" },
   { label: "Method", href: "#method" },
   { label: "Work", href: "#work" },
   { label: "About", href: "#about" },
@@ -40,51 +53,58 @@ const navItems = [
 const methodSteps = [
   {
     label: "Understand",
-    copy: "We learn how the business actually runs before prescribing tools.",
+    copy: "We learn how the business actually runs before prescribing tools or projects.",
   },
   {
     label: "Map",
-    copy: "We trace the website, domains, email, hosting, apps, handoffs, and gaps.",
+    copy: "We trace the website, domains, email, hosting, apps, manual handoffs, and gaps.",
   },
   {
-    label: "Build",
-    copy: "We stabilize the existing stack and create the right missing pieces.",
+    label: "Prioritize",
+    copy: "We separate urgent fixes, high-leverage workflow improvements, and later upgrades.",
   },
   {
-    label: "Manage",
-    copy: "We keep systems monitored, backed up, improved, and understandable.",
+    label: "Fix",
+    copy: "We stabilize the stack, build the missing pieces, and keep the system understandable.",
   },
 ];
 
 const workExamples = [
-  "Launch a modern business website with hosting, DNS, email, and backups handled.",
-  "Replace spreadsheet workflows with a practical internal tool or dashboard.",
-  "Connect forms, reports, approvals, office processes, and customer handoffs.",
-  "Build mobile-friendly tools for field teams, customers, or repeat operations.",
+  "Audit an outdated website, broken forms, DNS, email, hosting, backups, and analytics.",
+  "Replace spreadsheet and email-thread workflows with a practical internal tool or dashboard.",
+  "Connect intake forms, approvals, reports, office processes, and customer handoffs.",
+  "Build mobile-friendly portals for field teams, customers, file uploads, scheduling, and repeat operations.",
 ];
 
 const heroResponsibilities = [
   {
-    title: "Websites & web apps",
-    detail: "Public sites, landing pages, forms, customer portals, and mobile-friendly web tools.",
+    title: "Website & form issues",
+    detail: "Outdated pages, unclear booking flows, broken forms, slow mobile experiences, and missing analytics.",
     icon: Monitor,
   },
   {
-    title: "Domains, hosting & email",
-    detail: "DNS, deployments, business email, backups, monitoring, and ongoing stack management.",
+    title: "Hosting, email & backups",
+    detail: "DNS, business email, hosting, deployments, monitoring, backups, and recovery paths.",
     icon: Server,
   },
   {
-    title: "Software & automation",
-    detail: "Internal tools, dashboards, reporting, integrations, and workflows that replace manual handoffs.",
+    title: "Manual workflow drag",
+    detail: "Spreadsheets, PDFs, copy-paste, approvals, customer handoffs, dashboards, and reporting.",
     icon: CodeXml,
   },
 ];
 
 const supportItems = [
-  { label: "DNS", detail: "Records, redirects, renewals", icon: Globe },
-  { label: "Backups", detail: "Recovery paths and monitoring", icon: HardDrive },
-  { label: "Handoffs", detail: "Forms, approvals, reports", icon: Workflow },
+  { label: "Audit", detail: "Find the weak spots first", icon: ClipboardCheck },
+  { label: "Fixes", detail: "Prioritized by impact", icon: CircleCheck },
+  { label: "Retainers", detail: "Ongoing technical partner", icon: Workflow },
+];
+
+const auditPoints = [
+  "Website, forms, booking flow, analytics, and mobile experience",
+  "Domains, DNS, hosting, email, backups, monitoring, and vendor ownership",
+  "Spreadsheets, PDFs, approvals, copy-paste work, and customer handoffs",
+  "Best next fixes: urgent, high-leverage, and later improvements",
 ];
 ---
 
@@ -139,7 +159,7 @@ const supportItems = [
             href="mailto:nikolas@interlaysoftware.com"
             class="hidden min-h-12 items-center gap-3 rounded-md bg-teal-dark px-5 text-[0.95rem] font-extrabold text-white shadow-[0_14px_28px_rgba(54,95,79,0.18)] transition hover:-translate-y-0.5 hover:bg-teal-deep lg:inline-flex"
           >
-            Talk through your stack
+            Request a systems audit
             <ArrowRight class="size-4" aria-hidden="true" />
           </a>
           <button
@@ -216,7 +236,7 @@ const supportItems = [
             href="mailto:nikolas@interlaysoftware.com"
             data-mobile-menu-link
           >
-            Talk through your stack
+            Request a systems audit
             <ArrowRight class="size-4" aria-hidden="true" />
           </a>
         </div>
@@ -235,25 +255,25 @@ const supportItems = [
             <h1
               class="max-w-[680px] text-[2.72rem] leading-[1.02] font-black text-ink sm:text-[4rem] lg:text-[4.05rem]"
             >
-              Your technical partner for websites, systems, and software.
+              Find and fix the systems costing your business time.
             </h1>
             <p class="mt-7 max-w-[590px] text-lg leading-8 text-body sm:text-xl">
-              We build and manage websites, hosting, email, infrastructure, mobile apps, and custom software for small
-              businesses.
+              Start with a business systems audit for your website, hosting, email, forms, manual workflows, and custom
+              software gaps. Then fix the highest-impact problems first.
             </p>
             <div class="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
               <a
                 href="mailto:nikolas@interlaysoftware.com"
                 class="inline-flex min-h-[58px] items-center justify-center gap-3 rounded-md bg-teal-dark px-6 text-base font-extrabold text-white shadow-[0_18px_34px_rgba(54,95,79,0.2)] transition hover:-translate-y-0.5 hover:bg-teal-deep"
               >
-                Talk through your stack
+                Request a systems audit
                 <ArrowRight class="size-5" aria-hidden="true" />
               </a>
               <a
-                href="#services"
+                href="#audit"
                 class="inline-flex min-h-[54px] items-center justify-center gap-3 border-b-2 border-teal-dark px-1 text-base font-extrabold text-teal-dark transition hover:text-ink"
               >
-                Explore services
+                See what gets reviewed
                 <ArrowRight class="size-5" aria-hidden="true" />
               </a>
             </div>
@@ -263,7 +283,7 @@ const supportItems = [
             class="rounded-lg border border-line bg-white/88 p-5 shadow-[0_24px_70px_rgba(16,24,32,0.1)] backdrop-blur sm:p-7"
             aria-label="What Interlay manages"
           >
-            <p class="text-[0.72rem] font-extrabold tracking-[0.32em] text-teal-dark uppercase">Handled together</p>
+            <p class="text-[0.72rem] font-extrabold tracking-[0.32em] text-teal-dark uppercase">Audit focus</p>
             <div class="mt-6 divide-y divide-line">
               {
                 heroResponsibilities.map((item) => {
@@ -310,42 +330,77 @@ const supportItems = [
             <div>
               <p class="mb-4 text-sm font-extrabold tracking-[0.32em] text-teal-dark uppercase">Services</p>
               <h2 class="max-w-[560px] text-4xl leading-[1.04] font-black text-ink sm:text-5xl">
-                The parts of business technology that need to work together.
+                The weak spots that turn into lost time, missed leads, and messy operations.
               </h2>
             </div>
             <p class="max-w-[650px] text-lg leading-8 text-body lg:justify-self-end">
-              Interlay keeps the public site, operations stack, and custom software moving in the same direction instead
-              of becoming separate problems.
+              Interlay starts by finding the practical problems in the stack, then fixes the website, workflow,
+              infrastructure, or software layer that is creating drag.
             </p>
           </div>
 
           <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line lg:grid-cols-3">
             <article class="bg-white p-7">
               <Monitor class="mb-8 size-10 text-teal-dark" aria-hidden="true" />
-              <h3 class="text-2xl leading-tight font-black text-ink">Websites &amp; Web Apps</h3>
+              <h3 class="text-2xl leading-tight font-black text-ink">Website &amp; Lead Flow</h3>
               <p class="mt-4 leading-7 text-body">
-                Modern sites, landing pages, customer portals, and mobile-friendly web tools with hosting and deployment
-                handled.
+                Outdated sites, broken forms, unclear booking paths, landing pages, customer portals, and
+                mobile-friendly web tools that need to convert reliably.
               </p>
             </article>
 
             <article class="bg-white p-7">
               <Server class="mb-8 size-10 text-teal-dark" aria-hidden="true" />
-              <h3 class="text-2xl leading-tight font-black text-ink">Managed Infrastructure</h3>
+              <h3 class="text-2xl leading-tight font-black text-ink">Technical Stack Cleanup</h3>
               <p class="mt-4 leading-7 text-body">
-                Domains, DNS, email, hosting, backups, monitoring, deployments, and the operational details that keep
-                the stack stable.
+                Domains, DNS, email, hosting, backups, monitoring, deployments, analytics, and vendor ownership cleaned
+                up so the business is not guessing.
               </p>
             </article>
 
             <article class="bg-white p-7">
               <CodeXml class="mb-8 size-10 text-teal-dark" aria-hidden="true" />
-              <h3 class="text-2xl leading-tight font-black text-ink">Custom Software &amp; Automation</h3>
+              <h3 class="text-2xl leading-tight font-black text-ink">Workflow Automation</h3>
               <p class="mt-4 leading-7 text-body">
-                Internal tools, mobile workflows, dashboards, reporting, integrations, and practical automation for the
-                work that still happens by hand.
+                Internal tools, dashboards, reporting, integrations, approvals, and practical automation for work that
+                still depends on spreadsheets, PDFs, and copy-paste.
               </p>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="audit" class="border-y border-line bg-teal-soft">
+        <div class="mx-auto grid max-w-[1240px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:py-24">
+          <div>
+            <p class="mb-5 text-sm font-extrabold tracking-[0.32em] text-teal-dark uppercase">Systems Audit</p>
+            <h2 class="max-w-[620px] text-4xl leading-[1.04] font-black text-ink sm:text-5xl">
+              Start with the stack you have today.
+            </h2>
+            <p class="mt-7 max-w-[640px] text-xl leading-8 text-body">
+              The audit identifies what is costing time, leads, reliability, or clarity before anyone commits to a
+              larger build.
+            </p>
+            <a
+              href="mailto:nikolas@interlaysoftware.com"
+              class="mt-9 inline-flex min-h-[58px] items-center justify-center gap-3 rounded-md bg-teal-dark px-6 text-base font-extrabold text-white shadow-[0_16px_32px_rgba(54,95,79,0.22)] transition hover:-translate-y-0.5 hover:bg-teal-deep"
+            >
+              Request a systems audit
+              <ArrowRight class="size-5" aria-hidden="true" />
+            </a>
+          </div>
+
+          <div class="grid gap-px overflow-hidden rounded-lg border border-line bg-line">
+            {
+              auditPoints.map((point) => (
+                <article class="grid grid-cols-[2.5rem_1fr] gap-4 bg-white p-6">
+                  <span class="grid size-10 place-items-center rounded-md bg-panel-soft text-teal-dark">
+                    <CircleCheck class="size-5" aria-hidden="true" />
+                  </span>
+                  <p class="self-center text-lg leading-7 font-bold text-ink">{point}</p>
+                </article>
+              ))
+            }
           </div>
         </div>
       </section>
@@ -382,8 +437,8 @@ const supportItems = [
               </h2>
             </div>
             <p class="max-w-[680px] text-xl leading-8 text-body lg:justify-self-end">
-              If case studies are not the right first conversation, we start with the stack you have today and the work
-              it needs to support tomorrow.
+              If case studies are not the right first conversation, start with an audit of the stack you have today and
+              the work it needs to support tomorrow.
             </p>
           </div>
 
@@ -410,11 +465,13 @@ const supportItems = [
           </div>
           <div class="space-y-6 text-xl leading-8 text-body">
             <p>
-              Interlay helps small businesses build, manage, and modernize the digital systems they depend on: the
-              public website, the domain, the email, the hosting, the internal tools, the mobile workflows, and the
+              Interlay helps small businesses audit, build, manage, and modernize the digital systems they depend on:
+              the public website, the domain, the email, the hosting, the internal tools, the mobile workflows, and the
               operational software behind the business.
             </p>
-            <p class="font-bold text-ink">Not just designed. Not just built. Managed, connected, and made useful.</p>
+            <p class="font-bold text-ink">
+              Find the weak spots first. Then fix, connect, and manage the systems that matter.
+            </p>
           </div>
         </div>
       </section>
@@ -424,24 +481,24 @@ const supportItems = [
           <div>
             <p class="mb-5 text-sm font-extrabold tracking-[0.32em] text-teal-dark uppercase">Contact</p>
             <h2 class="max-w-[720px] text-4xl leading-[1.04] font-black text-ink sm:text-5xl">
-              Tell us what your business runs on.
+              Request a business systems audit.
             </h2>
             <p class="mt-7 max-w-[720px] text-xl leading-8 text-body">
-              Send a short note about your website, hosting, email, internal tools, manual workflows, or the systems you
-              want to improve.
+              Send a short note about your website, forms, hosting, email, internal tools, manual workflows, or the
+              systems that keep creating friction.
             </p>
           </div>
           <article class="rounded-lg border border-line bg-white p-7 shadow-site">
-            <h3 class="text-2xl font-black text-ink">Start with the stack</h3>
+            <h3 class="text-2xl font-black text-ink">What to include</h3>
             <p class="mt-4 leading-7 text-body">
-              Include the tools you use today, what still happens by hand, and where better software would change the
-              week.
+              Include the tools you use today, what still happens by hand, what breaks or gets duplicated, and where a
+              cleaner system would change the week.
             </p>
             <a
               href="mailto:nikolas@interlaysoftware.com"
               class="mt-8 inline-flex min-h-[58px] w-full items-center justify-center gap-3 rounded-md bg-teal-dark px-6 text-base font-extrabold text-white shadow-[0_16px_32px_rgba(54,95,79,0.22)] transition hover:-translate-y-0.5 hover:bg-teal-deep"
             >
-              Email Us
+              Request an audit
               <ArrowRight class="size-5" aria-hidden="true" />
             </a>
           </article>
@@ -465,7 +522,8 @@ const supportItems = [
               <span class="text-lg leading-tight font-black text-white">Interlay Software</span>
             </a>
             <p class="mt-4 text-sm leading-6 font-medium text-white/64 sm:text-base">
-              Websites, hosting, email, infrastructure, and custom software for small businesses.
+              Business systems audits, websites, hosting, email, workflow automation, and custom software for small
+              businesses.
             </p>
           </div>
 
