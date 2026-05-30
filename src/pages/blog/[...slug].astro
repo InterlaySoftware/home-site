@@ -106,15 +106,25 @@ const takeaways = [
       <aside class="hidden lg:block">
         <div class="sticky top-24 grid gap-10 border-l border-line pl-9">
           <div class="grid gap-4 pt-6 text-sm font-medium text-ink">
-            <button class="inline-flex items-center gap-3 text-left transition hover:text-teal-dark" type="button">
+            <button
+              class="inline-flex w-fit items-center gap-2 rounded px-1.5 py-1 text-left transition hover:bg-teal-soft/60 hover:text-teal-dark"
+              type="button"
+            >
               <Bookmark class="size-5 text-teal-dark" aria-hidden="true" />
               Save article
             </button>
-            <button class="inline-flex items-center gap-3 text-left transition hover:text-teal-dark" type="button">
+            <button
+              class="inline-flex w-fit items-center gap-2 rounded px-1.5 py-1 text-left transition hover:bg-teal-soft/60 hover:text-teal-dark"
+              type="button"
+            >
               <Printer class="size-5 text-teal-dark" aria-hidden="true" />
               Print
             </button>
-            <button class="inline-flex items-center gap-3 text-left transition hover:text-teal-dark" type="button">
+            <button
+              class="inline-flex w-fit items-center gap-2 rounded px-1.5 py-1 text-left transition hover:bg-teal-soft/60 hover:text-teal-dark active:scale-[0.98]"
+              type="button"
+              data-copy-link
+            >
               <Link class="size-5 text-teal-dark" aria-hidden="true" />
               Copy link
             </button>
@@ -155,14 +165,27 @@ const takeaways = [
     <SiteFooter anchorPrefix="/" />
 
     <script>
+      const showCopiedMessage = (event: MouseEvent) => {
+        const message = document.createElement("span");
+        message.className = "copied-pop";
+        message.textContent = "Copied";
+        message.style.left = `${event.clientX}px`;
+        message.style.top = `${event.clientY}px`;
+        document.body.append(message);
+        message.addEventListener("animationend", () => message.remove(), { once: true });
+      };
+
       document.querySelectorAll("button").forEach((button) => {
         if (button.textContent?.trim() === "Print") {
           button.addEventListener("click", () => window.print());
         }
 
-        if (button.textContent?.trim() === "Copy link") {
-          button.addEventListener("click", async () => {
-            await navigator.clipboard?.writeText(window.location.href);
+        if (button.hasAttribute("data-copy-link")) {
+          button.addEventListener("click", async (event) => {
+            const url = new URL(window.location.href);
+            url.hash = "";
+            await navigator.clipboard?.writeText(url.toString());
+            showCopiedMessage(event);
           });
         }
       });
