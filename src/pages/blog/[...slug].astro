@@ -120,9 +120,9 @@ const takeaways = [
             sectionHeadings.length > 0 && (
               <div class="border-t border-line pt-5">
                 <h2 class="text-base font-black text-teal-dark">Contents</h2>
-                <nav class="mt-3 divide-y divide-line text-sm font-medium text-teal-dark">
+                <nav class="mt-3 divide-y divide-line text-sm font-medium" aria-label="Article sections">
                   {sectionHeadings.map((heading) => (
-                    <a class="block py-3 transition hover:text-ink" href={`#${heading.slug}`}>
+                    <a class="contents-link block py-3 transition hover:text-ink" href={`#${heading.slug}`}>
                       {heading.text}
                     </a>
                   ))}
