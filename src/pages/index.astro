@@ -1,17 +1,6 @@
 ---
-import {
-  ArrowRight,
-  CircleCheck,
-  ClipboardCheck,
-  CodeXml,
-  Mail,
-  MapPin,
-  Menu,
-  Monitor,
-  Server,
-  Workflow,
-  X,
-} from "@lucide/astro";
+import { ArrowRight, CircleCheck, ClipboardCheck, CodeXml, Menu, Monitor, Server, Workflow, X } from "@lucide/astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import { site } from "../data/site";
 import "../styles/global.css";
 
@@ -47,6 +36,7 @@ const navItems = [
   { label: "Audit", href: "#audit" },
   { label: "Method", href: "#method" },
   { label: "Work", href: "#work" },
+  { label: "Blog", href: "/blog/" },
   { label: "About", href: "#about" },
 ];
 
@@ -506,63 +496,7 @@ const auditPoints = [
       </section>
     </main>
 
-    <footer class="bg-deep py-8 text-white lg:py-10">
-      <div class="mx-auto max-w-[1240px] px-5 sm:px-8">
-        <div class="grid gap-7 md:grid-cols-[1fr_auto] md:items-center">
-          <div class="max-w-[620px]">
-            <a
-              class="footer-brand-link inline-flex items-center gap-3"
-              href="/"
-              aria-label="Interlay Software home"
-              data-home-logo-link
-            >
-              <span class="footer-logo-mark grid size-11 shrink-0 place-items-center rounded-md bg-white p-2">
-                <img src="/favicon.svg" alt="" class="size-7 object-contain" aria-hidden="true" />
-              </span>
-              <span class="text-lg leading-tight font-black text-white">Interlay Software</span>
-            </a>
-            <p class="mt-4 text-sm leading-6 font-medium text-white/64 sm:text-base">
-              Business systems audits, websites, hosting, email, workflow automation, and custom software for small
-              businesses.
-            </p>
-          </div>
-
-          <div class="grid gap-5 md:justify-items-end">
-            <nav aria-label="Footer navigation">
-              <ul class="flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold text-white/68 sm:text-base md:justify-end">
-                {
-                  [...navItems, { label: "Contact", href: "#contact" }].map((item) => (
-                    <li>
-                      <a class="footer-nav-link" href={item.href}>
-                        {item.label}
-                      </a>
-                    </li>
-                  ))
-                }
-              </ul>
-            </nav>
-            <div class="grid gap-3 text-sm leading-6 font-medium text-white/64 sm:text-base">
-              <a class="footer-contact-link" href="mailto:nikolas@interlaysoftware.com">
-                <span class="footer-contact-icon">
-                  <Mail class="size-4" aria-hidden="true" stroke-width="2.4" />
-                </span>
-                <span>nikolas@interlaysoftware.com</span>
-              </a>
-              <a class="footer-contact-link" href={site.googleBusinessProfileUrl}>
-                <span class="footer-contact-icon">
-                  <MapPin class="size-4" aria-hidden="true" stroke-width="2.4" />
-                </span>
-                <span>Google Business Profile</span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-7 border-t border-white/10 pt-5">
-          <p class="text-sm font-medium text-white/48">© 2026 Interlay Software LLC. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
+    <SiteFooter />
 
     <script>
       const initHeader = () => {

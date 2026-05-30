@@ -1,0 +1,266 @@
+---
+import {
+  ArrowRight,
+  ChartNoAxesColumn,
+  ChevronRight,
+  Clock,
+  ClipboardCheck,
+  Search,
+  Star,
+  Wrench,
+} from "@lucide/astro";
+import { getCollection } from "astro:content";
+import SiteFooter from "../../components/SiteFooter.astro";
+import { site } from "../../data/site";
+import "../../styles/global.css";
+
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+const featuredPost = posts[0];
+const canonicalUrl = new URL("/blog/", site.url).toString();
+const pageTitle = `Blog | ${site.name}`;
+const pageDescription = "Practical notes on websites, quote forms, workflows, and the systems behind small businesses.";
+const formatPostDate = (date: string) =>
+  new Date(`${date}T00:00:00.000Z`).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+
+const heroPoints = [
+  { label: "Real systems", icon: ClipboardCheck },
+  { label: "Operational focus", icon: ChartNoAxesColumn },
+  { label: "Actionable", icon: Wrench },
+  { label: "Built for small teams", icon: Clock },
+];
+
+const categories = ["All", "Quote forms", "Lead flow", "Workflow", "Websites", "Operations", "Systems", "Automation"];
+
+const plannedArticles = [
+  {
+    date: "2026-05-12",
+    title: "5 Things That Quietly Slow Down Small Business Websites",
+    description: "Small issues that create real friction, and how to fix them.",
+    topics: ["Websites", "Performance", "User experience"],
+  },
+  {
+    date: "2026-04-28",
+    title: "From Spreadsheets to Systems: When to Build Internal Tools",
+    description: "A practical way to decide when a custom tool is worth it.",
+    topics: ["Workflow", "Automation", "Internal tools"],
+  },
+  {
+    date: "2026-04-15",
+    title: "Email, DNS, and Hosting: The Foundation Most Businesses Ignore",
+    description: "Why infrastructure details matter more than they seem.",
+    topics: ["Infrastructure", "Email", "Hosting"],
+  },
+];
+
+const articleRows = [
+  ...posts.map((post) => ({
+    date: post.data.date,
+    title: post.data.title,
+    description: "Help customers submit the right details and help your team respond faster and smarter.",
+    topics: post.data.topics,
+    href: `/blog/${post.id}/`,
+  })),
+  ...plannedArticles.map((article) => ({ ...article, href: undefined })),
+];
+---
+
+<!doctype html>
+<html lang="en" class="bg-paper text-ink">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href={site.logoPath} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body class="min-h-screen bg-paper font-sans antialiased">
+    <header class="border-b border-line bg-white">
+      <div class="mx-auto flex h-[68px] max-w-[1240px] items-center justify-between px-5 sm:px-8">
+        <a href="/" class="flex min-w-0 items-center gap-3" aria-label="Interlay Software home">
+          <img src="/favicon.svg" alt="" class="size-10 shrink-0 rounded-lg" aria-hidden="true" />
+          <span class="truncate text-lg font-extrabold text-ink sm:text-xl">Interlay Software</span>
+        </a>
+        <nav class="flex h-full items-center gap-7 text-sm font-bold text-body sm:text-base" aria-label="Site">
+          <a class="flex h-full items-center border-b-2 border-transparent transition hover:text-teal-dark" href="/">
+            Home
+          </a>
+          <a
+            class="flex h-full items-center border-b-2 border-teal-dark text-teal-dark"
+            href="/blog/"
+            aria-current="page"
+          >
+            Blog
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="border-b border-line bg-white">
+        <div
+          class="mx-auto grid max-w-[1240px] gap-10 px-5 py-8 sm:px-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-center lg:gap-16 lg:py-6"
+        >
+          <div>
+            <p class="text-sm leading-tight font-black text-teal-dark">
+              <a class="hover:text-ink" href="/">Interlay Software</a>
+              <span class="text-muted/50"> / </span>
+              <span>Blog</span>
+            </p>
+            <h1 class="mt-8 max-w-[560px] text-[2.9rem] leading-[1.03] font-black text-ink sm:text-[4rem]">
+              Field notes for business systems
+            </h1>
+            <p class="mt-5 max-w-[560px] text-lg leading-8 text-body">
+              Practical notes on websites, forms, workflow, and the operational details that quietly affect leads and
+              time. Built for small teams who run real businesses.
+            </p>
+            <div class="mt-9 flex flex-wrap gap-x-7 gap-y-4">
+              {
+                heroPoints.map((point) => {
+                  const Icon = point.icon;
+
+                  return (
+                    <div class="inline-flex items-center gap-3 text-sm font-bold text-ink">
+                      <Icon class="size-5 text-teal-dark" aria-hidden="true" />
+                      <span>{point.label}</span>
+                    </div>
+                  );
+                })
+              }
+            </div>
+          </div>
+
+          <img
+            class="aspect-[719/327] w-full rounded-md border border-line object-cover shadow-[0_18px_52px_rgba(16,24,32,0.12)]"
+            src="/blog-img.jpg"
+            width="719"
+            height="327"
+            alt="Workflow sketch showing website forms, customer uploads, intake, routing, dispatch, updates, work in progress, and reporting."
+          />
+        </div>
+      </section>
+
+      {
+        featuredPost && (
+          <section class="border-b border-line bg-paper">
+            <div class="mx-auto grid max-w-[1240px] gap-5 px-5 py-6 sm:px-8 lg:grid-cols-[180px_1fr_420px] lg:items-center">
+              <div class="inline-flex items-center gap-3 text-sm font-black text-teal-dark uppercase">
+                <Star class="size-5 fill-teal-dark/20" aria-hidden="true" />
+                Featured article
+              </div>
+              <article class="border-line lg:border-x lg:px-8">
+                <time class="text-sm font-medium text-muted" datetime={featuredPost.data.date}>
+                  {formatPostDate(featuredPost.data.date)}
+                </time>
+                <h2 class="mt-2 text-xl leading-tight font-black text-ink sm:text-2xl">
+                  <a class="transition hover:text-teal-dark" href={`/blog/${featuredPost.id}/`}>
+                    {featuredPost.data.title}
+                  </a>
+                </h2>
+                <p class="mt-2 max-w-[760px] leading-6 text-body">{featuredPost.data.description}</p>
+              </article>
+              <div class="grid gap-5 lg:justify-self-end">
+                <div class="flex flex-wrap gap-2">
+                  {featuredPost.data.topics.map((topic) => (
+                    <span class="rounded bg-panel-soft px-2.5 py-1 text-xs font-bold text-muted">{topic}</span>
+                  ))}
+                </div>
+                <a
+                  class="inline-flex items-center gap-2 text-base font-extrabold text-teal-dark transition hover:text-ink"
+                  href={`/blog/${featuredPost.id}/`}
+                >
+                  Read article
+                  <ArrowRight class="size-4" aria-hidden="true" />
+                </a>
+              </div>
+            </div>
+          </section>
+        )
+      }
+
+      <section class="mx-auto max-w-[1240px] px-5 py-5 sm:px-8">
+        <div class="flex flex-col gap-4 border-b border-line pb-2 lg:flex-row lg:items-end lg:justify-between">
+          <div class="flex gap-1 overflow-x-auto">
+            {
+              categories.map((category, index) => (
+                <button
+                  type="button"
+                  class={`min-h-10 shrink-0 border-b-2 px-4 text-sm font-bold transition ${
+                    index === 0
+                      ? "border-teal-dark text-ink"
+                      : "border-transparent text-body hover:border-line hover:text-teal-dark"
+                  }`}
+                >
+                  {category}
+                </button>
+              ))
+            }
+          </div>
+          <label class="relative block w-full max-w-[320px]">
+            <span class="sr-only">Search articles</span>
+            <Search class="absolute top-1/2 left-3 size-5 -translate-y-1/2 text-muted" aria-hidden="true" />
+            <input
+              class="h-10 w-full rounded-md border border-line bg-white pr-3 pl-10 text-sm text-body transition outline-none placeholder:text-muted/70 focus:border-teal-dark focus:ring-3 focus:ring-teal-soft"
+              type="search"
+              placeholder="Search articles..."
+            />
+          </label>
+        </div>
+
+        <div class="divide-y divide-line">
+          {
+            articleRows.map((article) => {
+              const rowContent = (
+                <>
+                  <time class="text-sm font-medium text-muted" datetime={article.date}>
+                    {formatPostDate(article.date)}
+                  </time>
+                  <div>
+                    <h3 class="text-base leading-tight font-black text-ink">{article.title}</h3>
+                    <p class="mt-1 text-sm leading-5 text-body">{article.description}</p>
+                  </div>
+                  <div class="flex flex-wrap gap-2 lg:justify-end">
+                    {article.topics.map((topic) => (
+                      <span class="rounded bg-panel-soft px-2.5 py-1 text-xs font-bold text-muted">{topic}</span>
+                    ))}
+                  </div>
+                  <ChevronRight class="hidden size-5 justify-self-end text-muted sm:block" aria-hidden="true" />
+                </>
+              );
+
+              return article.href ? (
+                <a
+                  class="grid gap-3 py-4 transition hover:bg-white/70 sm:grid-cols-[8.5rem_1fr] lg:grid-cols-[8.5rem_minmax(0,1fr)_360px_2rem] lg:items-center"
+                  href={article.href}
+                >
+                  {rowContent}
+                </a>
+              ) : (
+                <article class="grid gap-3 py-4 opacity-75 sm:grid-cols-[8.5rem_1fr] lg:grid-cols-[8.5rem_minmax(0,1fr)_360px_2rem] lg:items-center">
+                  {rowContent}
+                </article>
+              );
+            })
+          }
+        </div>
+        <p class="border-t border-line py-4 text-center text-sm font-medium text-muted">More articles coming soon.</p>
+      </section>
+    </main>
+
+    <SiteFooter anchorPrefix="/" />
+  </body>
+</html>
