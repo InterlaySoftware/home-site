@@ -18,7 +18,7 @@ const posts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.localeCompare(a.data.date));
 
-const featuredPost = posts[0];
+const latestPost = posts[0];
 const canonicalUrl = new URL("/blog/", site.url).toString();
 const pageTitle = `Blog | ${site.name}`;
 const pageDescription = "Practical notes on websites, quote forms, workflows, and the systems behind small businesses.";
@@ -37,26 +37,37 @@ const heroPoints = [
   { label: "Built for small teams", icon: Clock },
 ];
 
-const categories = ["All", "Quote forms", "Lead flow", "Workflow", "Websites", "Operations", "Systems", "Automation"];
+const categories = [
+  { label: "All", topics: [] },
+  {
+    label: "Websites & forms",
+    topics: ["websites & forms", "websites", "quote forms", "forms", "booking flow", "user experience"],
+  },
+  { label: "Lead flow", topics: ["lead flow"] },
+  { label: "Hosting & email", topics: ["hosting & email", "hosting", "email", "infrastructure", "dns"] },
+  { label: "Workflows", topics: ["workflow", "workflows"] },
+  { label: "Internal tools", topics: ["internal tools", "dashboards", "portals"] },
+  { label: "Automation", topics: ["automation"] },
+];
 
 const plannedArticles = [
   {
     date: "2026-05-12",
     title: "5 Things That Quietly Slow Down Small Business Websites",
     description: "Small issues that create real friction, and how to fix them.",
-    topics: ["Websites", "Performance", "User experience"],
+    topics: ["Websites & forms", "Lead flow"],
   },
   {
     date: "2026-04-28",
     title: "From Spreadsheets to Systems: When to Build Internal Tools",
     description: "A practical way to decide when a custom tool is worth it.",
-    topics: ["Workflow", "Automation", "Internal tools"],
+    topics: ["Workflows", "Internal tools", "Automation"],
   },
   {
     date: "2026-04-15",
     title: "Email, DNS, and Hosting: The Foundation Most Businesses Ignore",
     description: "Why infrastructure details matter more than they seem.",
-    topics: ["Infrastructure", "Email", "Hosting"],
+    topics: ["Hosting & email"],
   },
 ];
 
@@ -155,33 +166,33 @@ const articleRows = [
       </section>
 
       {
-        featuredPost && (
+        latestPost && (
           <section class="border-b border-line bg-paper">
             <div class="mx-auto grid max-w-[1240px] gap-5 px-5 py-6 sm:px-8 lg:grid-cols-[180px_1fr_420px] lg:items-center">
               <div class="inline-flex items-center gap-3 text-sm font-black text-teal-dark uppercase">
                 <Star class="size-5 fill-teal-dark/20" aria-hidden="true" />
-                Featured article
+                Latest Article
               </div>
               <article class="border-line lg:border-x lg:px-8">
-                <time class="text-sm font-medium text-muted" datetime={featuredPost.data.date}>
-                  {formatPostDate(featuredPost.data.date)}
+                <time class="text-sm font-medium text-muted" datetime={latestPost.data.date}>
+                  {formatPostDate(latestPost.data.date)}
                 </time>
                 <h2 class="mt-2 text-xl leading-tight font-black text-ink sm:text-2xl">
-                  <a class="transition hover:text-teal-dark" href={`/blog/${featuredPost.id}/`}>
-                    {featuredPost.data.title}
+                  <a class="transition hover:text-teal-dark" href={`/blog/${latestPost.id}/`}>
+                    {latestPost.data.title}
                   </a>
                 </h2>
-                <p class="mt-2 max-w-[760px] leading-6 text-body">{featuredPost.data.description}</p>
+                <p class="mt-2 max-w-[760px] leading-6 text-body">{latestPost.data.description}</p>
               </article>
               <div class="grid gap-5 lg:justify-self-end">
                 <div class="flex flex-wrap gap-2">
-                  {featuredPost.data.topics.map((topic) => (
+                  {latestPost.data.topics.map((topic) => (
                     <span class="rounded bg-panel-soft px-2.5 py-1 text-xs font-bold text-muted">{topic}</span>
                   ))}
                 </div>
                 <a
                   class="inline-flex items-center gap-2 text-base font-extrabold text-teal-dark transition hover:text-ink"
-                  href={`/blog/${featuredPost.id}/`}
+                  href={`/blog/${latestPost.id}/`}
                 >
                   Read article
                   <ArrowRight class="size-4" aria-hidden="true" />
@@ -194,10 +205,16 @@ const articleRows = [
 
       <section class="mx-auto max-w-[1240px] px-5 py-5 sm:px-8">
         <div class="flex flex-col gap-4 border-b border-line pb-2 lg:flex-row lg:items-end lg:justify-between">
-          <div class="flex gap-1 overflow-x-auto">
+          <div class="flex gap-1 overflow-x-auto" role="tablist" aria-label="Article categories">
             {
               categories.map((category, index) => (
                 <button
+                  data-article-category={category.label.toLowerCase()}
+                  data-article-category-topics={JSON.stringify(category.topics)}
+                  aria-selected={index === 0 ? "true" : "false"}
+                  aria-controls="article-results"
+                  role="tab"
+                  tabindex={index === 0 ? "0" : "-1"}
                   type="button"
                   class={`min-h-10 shrink-0 border-b-2 px-4 text-sm font-bold transition ${
                     index === 0
@@ -205,7 +222,7 @@ const articleRows = [
                       : "border-transparent text-body hover:border-line hover:text-teal-dark"
                   }`}
                 >
-                  {category}
+                  {category.label}
                 </button>
               ))
             }
@@ -217,13 +234,23 @@ const articleRows = [
               class="h-10 w-full rounded-md border border-line bg-white pr-3 pl-10 text-sm text-body transition outline-none placeholder:text-muted/70 focus:border-teal-dark focus:ring-3 focus:ring-teal-soft"
               type="search"
               placeholder="Search articles..."
+              data-article-search
             />
           </label>
         </div>
 
-        <div class="divide-y divide-line">
+        <div class="divide-y divide-line" data-article-list id="article-results" role="tabpanel" aria-live="polite">
           {
             articleRows.map((article) => {
+              const searchText = [
+                article.title,
+                article.description,
+                formatPostDate(article.date),
+                article.topics.join(" "),
+              ]
+                .join(" ")
+                .toLowerCase();
+
               const rowContent = (
                 <>
                   <time class="text-sm font-medium text-muted" datetime={article.date}>
@@ -246,21 +273,118 @@ const articleRows = [
                 <a
                   class="grid gap-3 py-4 transition hover:bg-white/70 sm:grid-cols-[8.5rem_1fr] lg:grid-cols-[8.5rem_minmax(0,1fr)_360px_2rem] lg:items-center"
                   href={article.href}
+                  data-article-row
+                  data-article-topics={JSON.stringify(article.topics.map((topic) => topic.toLowerCase()))}
+                  data-article-search-text={searchText}
                 >
                   {rowContent}
                 </a>
               ) : (
-                <article class="grid gap-3 py-4 opacity-75 sm:grid-cols-[8.5rem_1fr] lg:grid-cols-[8.5rem_minmax(0,1fr)_360px_2rem] lg:items-center">
+                <article
+                  class="grid gap-3 py-4 opacity-75 sm:grid-cols-[8.5rem_1fr] lg:grid-cols-[8.5rem_minmax(0,1fr)_360px_2rem] lg:items-center"
+                  data-article-row
+                  data-article-topics={JSON.stringify(article.topics.map((topic) => topic.toLowerCase()))}
+                  data-article-search-text={searchText}
+                >
                   {rowContent}
                 </article>
               );
             })
           }
         </div>
+        <p class="hidden py-10 text-center text-sm font-bold text-muted" data-article-empty>
+          No articles match that filter.
+        </p>
         <p class="border-t border-line py-4 text-center text-sm font-medium text-muted">More articles coming soon.</p>
       </section>
     </main>
 
     <SiteFooter anchorPrefix="/" />
+    <script>
+      const categoryButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-article-category]"));
+      const searchInput = document.querySelector<HTMLInputElement>("[data-article-search]");
+      const articleRows = Array.from(document.querySelectorAll<HTMLElement>("[data-article-row]"));
+      const emptyMessage = document.querySelector<HTMLElement>("[data-article-empty]");
+
+      const activeClasses = ["border-teal-dark", "text-ink"];
+      const inactiveClasses = ["border-transparent", "text-body", "hover:border-line", "hover:text-teal-dark"];
+
+      let activeCategory = "all";
+      let activeCategoryTopics: string[] = [];
+
+      const setActiveCategory = (button: HTMLButtonElement) => {
+        activeCategory = button.dataset.articleCategory ?? "all";
+        activeCategoryTopics = JSON.parse(button.dataset.articleCategoryTopics ?? "[]") as string[];
+
+        categoryButtons.forEach((categoryButton) => {
+          const isActive = categoryButton === button;
+
+          categoryButton.setAttribute("aria-selected", String(isActive));
+          categoryButton.tabIndex = isActive ? 0 : -1;
+          categoryButton.classList.toggle(activeClasses[0], isActive);
+          categoryButton.classList.toggle(activeClasses[1], isActive);
+          inactiveClasses.forEach((className) => categoryButton.classList.toggle(className, !isActive));
+        });
+      };
+
+      const articleMatchesCategory = (row: HTMLElement) => {
+        if (activeCategory === "all") {
+          return true;
+        }
+
+        const topics = JSON.parse(row.dataset.articleTopics ?? "[]") as string[];
+
+        return activeCategoryTopics.some((topic) => topics.includes(topic));
+      };
+
+      const filterArticles = () => {
+        const query = searchInput?.value.trim().toLowerCase() ?? "";
+        let visibleCount = 0;
+
+        articleRows.forEach((row) => {
+          const searchText = row.dataset.articleSearchText ?? "";
+          const isVisible = articleMatchesCategory(row) && (!query || searchText.includes(query));
+
+          row.classList.toggle("hidden", !isVisible);
+
+          if (isVisible) {
+            visibleCount += 1;
+          }
+        });
+
+        emptyMessage?.classList.toggle("hidden", visibleCount > 0);
+      };
+
+      categoryButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          setActiveCategory(button);
+          filterArticles();
+        });
+
+        button.addEventListener("keydown", (event) => {
+          if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+            return;
+          }
+
+          event.preventDefault();
+
+          const currentIndex = categoryButtons.indexOf(button);
+          const nextIndex =
+            {
+              ArrowLeft: currentIndex === 0 ? categoryButtons.length - 1 : currentIndex - 1,
+              ArrowRight: currentIndex === categoryButtons.length - 1 ? 0 : currentIndex + 1,
+              Home: 0,
+              End: categoryButtons.length - 1,
+            }[event.key] ?? currentIndex;
+          const nextButton = categoryButtons[nextIndex];
+
+          nextButton.focus();
+          setActiveCategory(nextButton);
+          filterArticles();
+        });
+      });
+
+      searchInput?.addEventListener("input", filterArticles);
+    </script>
   </body>
 </html>

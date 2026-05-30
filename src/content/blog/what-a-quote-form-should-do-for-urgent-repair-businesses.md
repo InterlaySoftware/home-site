@@ -3,9 +3,9 @@ title: "What a Quote Form Should Do for Urgent Repair Businesses"
 description: "A quote form for urgent repair work should help the customer move fast and help the business respond with the right context."
 date: "2026-05-29"
 topics:
-  - Quote forms
+  - Websites & forms
   - Lead flow
-  - Urgent repair
+  - Workflows
 draft: false
 ---
 
