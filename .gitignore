@@ -4,6 +4,7 @@ dist/
 .playwright-cli/
 .wrangler/
 output/
+outreach/
 .DS_Store
 *.log
 .idea
