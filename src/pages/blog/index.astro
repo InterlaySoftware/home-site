@@ -58,12 +58,6 @@ const plannedArticles = [
     topics: ["Websites & forms", "Lead flow"],
   },
   {
-    date: "2026-04-28",
-    title: "From Spreadsheets to Systems: When to Build Internal Tools",
-    description: "A practical way to decide when a custom tool is worth it.",
-    topics: ["Workflows", "Internal tools", "Automation"],
-  },
-  {
     date: "2026-04-15",
     title: "Email, DNS, and Hosting: The Foundation Most Businesses Ignore",
     description: "Why infrastructure details matter more than they seem.",
@@ -75,7 +69,7 @@ const articleRows = [
   ...posts.map((post) => ({
     date: post.data.date,
     title: post.data.title,
-    description: "Help customers submit the right details and help your team respond faster and smarter.",
+    description: post.data.description,
     topics: post.data.topics,
     href: `/blog/${post.id}/`,
   })),

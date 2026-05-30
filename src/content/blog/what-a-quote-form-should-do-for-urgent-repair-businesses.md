@@ -6,6 +6,12 @@ topics:
   - Websites & forms
   - Lead flow
   - Workflows
+takeaways:
+  - Collect the right details up front.
+  - Set clear expectations for response.
+  - Route requests to the right person.
+  - Make it easy on mobile.
+  - Measure and improve the flow.
 draft: false
 ---
 

@@ -9,6 +9,7 @@ const blog = defineCollection({
     description: z.string(),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
     topics: z.array(z.string()).default([]),
+    takeaways: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   }),
 });
