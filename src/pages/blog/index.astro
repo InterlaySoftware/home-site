@@ -10,6 +10,7 @@ import {
   Wrench,
 } from "@lucide/astro";
 import { getCollection } from "astro:content";
+import GoogleTag from "../../components/GoogleTag.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import { site } from "../../data/site";
 import "../../styles/global.css";
@@ -80,6 +81,7 @@ const articleRows = [
 <!doctype html>
 <html lang="en" class="bg-paper text-ink">
   <head>
+    <GoogleTag />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{pageTitle}</title>

@@ -1,5 +1,6 @@
 ---
 import { ArrowRight, CircleCheck, ClipboardCheck, CodeXml, Menu, Monitor, Server, Workflow, X } from "@lucide/astro";
+import GoogleTag from "../components/GoogleTag.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import { site } from "../data/site";
 import "../styles/global.css";
@@ -101,6 +102,7 @@ const auditPoints = [
 <!doctype html>
 <html lang="en" class="scroll-smooth bg-paper text-ink">
   <head>
+    <GoogleTag />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{site.title}</title>
