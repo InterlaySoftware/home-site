@@ -6,5 +6,9 @@ dist/
 output/
 outreach/
 .DS_Store
+.env
+.env.*
+.dev.vars
+!.env.example
 *.log
 .idea
