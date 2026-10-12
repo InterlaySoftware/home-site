@@ -4,9 +4,9 @@ const siteUrl = (import.meta.env.PUBLIC_SITE_URL?.trim() || fallbackSiteUrl).rep
 export const site = {
   name: "Interlay Software",
   url: siteUrl,
-  title: "Interlay Software | Business Systems Audits and Software",
+  title: "Nikolas Padilla | Interlay Software, Phoenix",
   description:
-    "Interlay Software audits, builds, and manages the websites, hosting, email, workflows, and custom software small businesses depend on.",
+    "I'm Nikolas Padilla, a Phoenix developer building websites, online stores, and custom software for trade and service businesses.",
   email: "nikolas@interlaysoftware.com",
   googleBusinessProfileUrl: "https://g.page/r/CSfQVgNcHd8aEAI",
   logoPath: "/favicon.svg",
